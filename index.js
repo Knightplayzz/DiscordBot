@@ -5,8 +5,6 @@ const fs = require ("fs");
 const bot = new discord.Client();
 bot.login(process.env.token);
 
-const activeSongs = new Map();
-
 var prefix = botConfig.prefix;
 bot.commands = new discord.Collection()
 
