@@ -105,5 +105,5 @@ bot.on("message", async message => {
 
     var commands = bot.commands.get(command.slice(prefix.length));
    
-    if (commands) commands.run(bot, message, arguments, options);
+    if (commands) commands.run(bot, message, arguments);
 });
