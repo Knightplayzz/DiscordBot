@@ -5,6 +5,8 @@ const fs = require ("fs");
 const bot = new discord.Client();
 bot.login(process.env.token);
 
+const activeSongs = new Map();
+
 var prefix = botConfig.prefix;
 bot.commands = new discord.Collection()
 
@@ -43,7 +45,7 @@ bot.on("message", async message => {
 
 
 
-
+    var prefix = botConfig.prefix;
     var messageArray = message.content.split(" ");
 
     var swearWords = JSON.parse(fs.readFileSync("./data/swearWords.json"));
@@ -107,12 +109,21 @@ bot.on("message", async message => {
 
     var commands = bot.commands.get(command.slice(prefix.length));
 
+    var options = {
+        active: activeSongs
+    }
    
     if (commands) commands.run(bot, message, arguments, options);
 });
 
 bot.on("message", async message =>{
+    
+    if(message.author.bot) return;
 
-    var messageArray = message.content.split(" ")
+    if(message.channel.type == "dm") return;
+
+    var prefix = botConfig.prefix;
+
+    var messageArray = message.content.split(" ");
 
 });
