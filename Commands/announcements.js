@@ -13,8 +13,6 @@ var botEmbedError = new discord.MessageEmbed()
 ])
 .setFooter(`© created by philippe#0354`)
 
-
-
 module.exports.run = async (client, message, args) => {
 
   if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send(botEmbedError);
@@ -27,7 +25,7 @@ module.exports.run = async (client, message, args) => {
     .setTitle("Use")
     .setColor("RED")
     .setFooter(`© created by philippe#0354`)
-    .setDescription(`Make a announcement thru: \n -announcement titel ${seperator} bericht ${ seperator} kleur ${seperator} kanaal`);
+    .setDescription(`Make a announcement thru: \n -announcement titel ${seperator} message ${ seperator} coller ${seperator} channel`);
 
     return message.reply(embed);
   }
@@ -46,15 +44,15 @@ module.exports.run = async (client, message, args) => {
   }
 
   var announceEmbed = new discord.MessageEmbed()
-  .setTitle("Announcement")
+  .setTitle(`${options.titel}`)
   .setColor(options.collor)
-  .setDescription(` \n ${options.titel} \n ${options.bericht} \n\n Bericht van ${message.author} \n`)
+  .setDescription(`${options.bericht} \n\n **Message form:** ${message.author} \n`)
   .setFooter(`© created by philippe#0354`)
   .setTimestamp();
   
 
   var channel = message.member.guild.channels.cache.find(channels => channels.name === options.kanaal);
-  if(!channel) return message.reply("geen goed kanaal");
+  if(!channel) return message.reply("Not an existing channel.");
 
   channel.send(announceEmbed);
 

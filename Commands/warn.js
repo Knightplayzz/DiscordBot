@@ -1,12 +1,15 @@
 const discord = require("discord.js");
+const botConfig = require("../botConfig.json");
 
 module.exports.run = async (client, message, args) => {
 
-    var targetUser = args.join(" ");
+    var prefix = botConfig.prefix
 
     var logChannel = message.guild.channels.cache.find(channel => channel.name === "log")
 
-    var reason = args[2];
+    var targetUser = args[0];
+
+    var reason = args.slice(1).join(" ");
  
     if(args[0] == null){
 
@@ -24,7 +27,7 @@ module.exports.run = async (client, message, args) => {
       .setColor("RED")
       .setFooter(`© created by philippe#0354`)
       .setTimestamp()
-      .setDescription(`${targetUser} heeft een warning \n **Reason:** ${reason}. \n **Warned by:** ${message.author}.`);
+      .setDescription(`**${targetUser}** heeft een warning \n **Reason:** ${reason}. \n **Warned by:** ${message.author}.`);
       
 
     var warn = new discord.MessageEmbed()
@@ -32,7 +35,7 @@ module.exports.run = async (client, message, args) => {
     .setColor("RED")
     .setFooter(`© created by philippe#0354`)
     .setTimestamp()
-    .setDescription(`${targetUser} You have a warning \n **Reason:** ${reason}. \n **Warned by:** ${message.author}.`);
+    .setDescription(`**${targetUser}** You have a warning \n **Reason:** ${reason}. \n **Warned by:** ${message.author}.`);
 
     message.channel.send(warn)
     logChannel.send(check)

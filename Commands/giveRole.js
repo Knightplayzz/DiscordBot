@@ -18,6 +18,8 @@ var botEmbedError2 = new discord.MessageEmbed()
 
 module.exports.run = async (bot, message, args) => {
 
+    var logChannel = message.guild.channels.cache.find(channel => channel.name === "log")
+
     if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send(botEmbedError1);
     
     
@@ -25,12 +27,6 @@ module.exports.run = async (bot, message, args) => {
         if (!targetUser) {
             return message.channel.send(botEmbedError2);
         }
-        var roleGiven = new discord.MessageEmbed()
-        .setColor("GREEN")
-        .setTitle("**The rol has been given!**")
-        .setDescription(`To: ${targetUser}.`)
-        .setFooter(`© created by philippe#0354`)
-        .setTimestamp();
 
         const role = message.guild.roles.cache.get(args[1])
         if (!role) {
@@ -38,10 +34,25 @@ module.exports.run = async (bot, message, args) => {
             return;
         }
 
-        targetUser.roles.add(role);
-
         console.log('Made it this far')
 
+        var roleGiven = new discord.MessageEmbed()
+        .setColor("GREEN")
+        .setTitle(`**Role has been given!**`)
+        .setDescription(`**To:** ${targetUser}. \n **Role:** ${role}. \n **By:** ${message.author}.`)
+        .setFooter(`© created by philippe#0354`)
+        .setTimestamp();
+
+        var log = new discord.MessageEmbed()
+        .setTitle("**Role add**")
+        .setColor("RED")
+        .setFooter(`© created by philippe#0354`)
+        .setTimestamp()
+        .setDescription(`**By:** ${targetUser} a role has been added. \n **role:** ${role}. \n **Gave by:** ${message.author}.`);
+
+        targetUser.roles.add(role);
+
+        logChannel.send(log);
         return message.channel.send(roleGiven);
     
 
